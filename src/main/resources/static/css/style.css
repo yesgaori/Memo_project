@@ -14,10 +14,11 @@ header {
 
 .contents {
 	height: 500px;
+	width: 1200px;
 }
 
 .contents > .input-box {
-	width: 400px;
+	width: 500px;
 	height:500px;
 }
 
