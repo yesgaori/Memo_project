@@ -73,7 +73,7 @@
 				
 				$.ajax({
 					type:"post"
-					, url:"/post/creat"
+					, url:"/post/create"
 					, data:formData
 					, enctype:"multipart/form-data" // 파일 업로드 필수 옵션
 					, processData:false // 파일 업로드 필수 옵션
