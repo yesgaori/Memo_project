@@ -12,12 +12,14 @@
  				`userId`
  				,`title`
  				,`content`
+ 				, `imagePath`
  			)
  		VALUE
 			(
 				#{userId}
 				, #{title}
 				, #{content}
+				, #{imagePath}
 			)
 			 	
  	
@@ -40,6 +42,26 @@
  			`userId` = #{userId}
  		ORDER BY
  			`id` DESC
+ 	
+ 	</select>
+ 	
+ 	<select id="selectPost" parameterType="int" 
+ 	resultType="com.yesgaori.memo.post.domain.Post">
+ 	
+ 		SELECT
+ 			`id`
+ 			, `userId`
+ 			, `title`
+ 			, `content`
+ 			, `imagePath`
+ 			, `createdAt`
+ 			, `updatedAt`
+ 		FROM
+ 			`post`
+ 		WHERE
+ 			`id` = #{id}
+ 	
+ 	
  	
  	</select>
  	

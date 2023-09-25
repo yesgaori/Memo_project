@@ -24,12 +24,11 @@
 					<textarea rows="7" class="col-12 mt-2" id="contentInput"></textarea>
 				</div>
 				<div class="d-flex mt-2">
-					<button type="button" class="btn btn-white">파일 선택</button>
-					<div>선택된 파일 없음</div>
+					<input type="file" class="mt-2 mb-3" id="fileInput">
 				</div>
-				<div class="d-flex justify-content-between mt-2">
-					<button type="button" class="btn">목록으로</button>
-					<button type="button" class="btn" id="saveBtn">저장</button>
+				<div class="d-flex justify-content-between mt-2 mb-3">
+					<button type="button" class="btn btn-secondary" onclick="location.href='/post/list-view'">목록으로</button>
+					<button type="button" class="btn btn-secondary" id="saveBtn">저장</button>
 				</div>
 			</div>
 		</section>
@@ -45,11 +44,17 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script>
 		$(document).ready(function() {
-		
+			
+			
+			
+			
+			
 			$("#saveBtn").on("click", function() {
 				
 				let title = $("#titleInput").val();
 				let content = $("#contentInput").val();
+				
+				let file = $("#fileInput")[0];
 				
 				if(title == "") {
 					alert("제목을 입력하세요")
@@ -61,10 +66,18 @@
 					return;
 				}
 				
+				let formData = new FormData();
+				formData.append("title", title);
+				formData.append("content", content);
+				formData.append("imageFile", file.files[0]);
+				
 				$.ajax({
 					type:"post"
 					, url:"/post/creat"
-					, data:{"title":title, "content":content}
+					, data:formData
+					, enctype:"multipart/form-data" // 파일 업로드 필수 옵션
+					, processData:false // 파일 업로드 필수 옵션
+					, contentType:false // 파일 업로드 필수 옵션
 					, success:function(data) {
 						if(data.result == "success") {
 							location.href="/post/list-view";
