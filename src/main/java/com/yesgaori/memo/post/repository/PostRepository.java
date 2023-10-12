@@ -10,6 +10,14 @@ import com.yesgaori.memo.post.domain.Post;
 @Repository
 public interface PostRepository {
 	
+	public int deletePost(@Param("postId") int postId);
+	
+	public int updatePost(
+					@Param("postId")int postId
+					,@Param("title") String title
+					,@Param("content") String content);
+	
+	
 	public int insertPost(
 			@Param("userId") int userId
 			, @Param("title") String title

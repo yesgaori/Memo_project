@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,43 @@ public class PostRestController {
 	
 	@Autowired
 	private PostService postService;
+	
+	@DeleteMapping("/delete")
+	public Map<String, String>deleteMemo(
+			@RequestParam("postId")int postId
+			, HttpSession session) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		int count = postService.deletePost(postId, userId);
+		Map<String, String> result = new HashMap<>();
+		if(count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+		
+	}
+	
+	@PutMapping("/update")
+	public Map<String, String >updateMemo(
+			@RequestParam("postId") int postId
+			, @RequestParam("title") String title
+			, @RequestParam("content") String content){
+		
+		int count = postService.updatePost(postId, title, content);
+		Map<String, String> result = new HashMap<>();
+		
+		if(count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+	}
 	
 	@PostMapping("/create")
 	public Map<String, String> createMemo(
